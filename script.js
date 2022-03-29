@@ -86,7 +86,7 @@ new Vue({
        separator="cell" 
        dense="true" 
        v-if="res.length" 
-       title="List Test" 
+       title="Alummi" 
        :data="res" 
        :columns="columns"
        :filter="filter"

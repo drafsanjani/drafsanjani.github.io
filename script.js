@@ -30,7 +30,7 @@ const csvToJson = (string, headers, quoteChar = '"', delimiter = ",") => {
     )
   );
 };
-const ID = "1rothYcxXzS-ztgH3Np-njO9vxU-vIwpnc4QWSWhY0-Y";
+const ID = "13fiUy_1cAZAAZBA37Tpxe2wG75Ep4JdCtUTXfnH9itY";
 const csvURL =
   "https://docs.google.com/spreadsheets/d/" +
   ID +
@@ -86,7 +86,7 @@ new Vue({
        separator="cell" 
        dense="true" 
        v-if="res.length" 
-       title="Alummi" 
+       title="List Test" 
        :data="res" 
        :columns="columns"
        :filter="filter"

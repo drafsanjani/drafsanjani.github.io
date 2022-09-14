@@ -1,0 +1,66 @@
+<!doctype HTML>
+<html>
+
+<head>
+    <title>JblogS Editor</title>
+    <meta charset="UTF-8" />
+    <meta name="Author" content="HashtagMC">
+    <link rel="stylesheet" href="css/editor.css" />
+</head>
+
+<body>
+    <h1>JblogS Editor</h1>
+    <table class="markdown-table">
+        <tr>
+            <td class="markdown-table-about">
+                <input type="text" id="Title" placeholder="Title" autofocus />
+                <input type="text" id="Author" placeholder="Author" />
+                <input type="text" id="Date" placeholder="Date" />
+                <button class="markdown-table-button" type="button" onclick="outputtext();">JblogS your text</button>
+            </td>
+            <td class="markdown-table-help" rowspan="2">
+                <h3>Markdown Markup Language:</h3>
+                <ul>
+                    <li># Heading level 1
+                    <li>## Heading level 2
+                    <li>###Heading level 3
+                    <li>Paragraphs are seperated by a < br /> blank line
+                    <li>*italic*
+                    <li>**bold**
+                    <li>`monospaces` (e.g. Source Code)
+                    <li>~~strikethrough~~
+                    <li>a [link](http://example.com)
+                    <li>* Item
+                    <br>* Item
+                    <br>* Item
+                    <li>1. Item 1
+                    <br>2. Item 2
+                    <br>3. Item 3
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td class="markdown-table-text">
+                <textarea id="Entry" rows="32" cols="192">Type your text here...</textarea>
+
+                <textarea id="Output" rows="8" cols="192" readonly>Output here...</textarea>
+            </td>
+        </tr>
+        <tr>
+    </table>
+
+    <script type="text/javascript" defer>
+        function outputtext() {
+            var title = document.getElementById("Title").value;
+            var author = document.getElementById("Author").value;
+            var date = document.getElementById("Date").value;
+            var entry = document.getElementById("Entry").value;
+
+            var output = "##" + title + "\n\n[metadata=" + author + ";" + date + "]\n\n" + entry;
+
+            document.getElementById("Output").value = output;
+        }
+    </script>
+</body>
+
+</html>

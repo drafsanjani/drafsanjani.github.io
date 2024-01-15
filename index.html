@@ -1,27 +1,128 @@
-<!doctype html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>JblogS example</title>
-        <!-- CSS -->
-        <link rel="stylesheet" href="css/example.css" />
-    </head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Matematika</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #question {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        #answer {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+        .number-btn {
+            font-size: 16px;
+            width: 40px;
+            height: 40px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        #top-score {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Game Matematika</h1>
+    <div id="question"></div>
+    <input type="text" id="userAnswer" placeholder="Masukkan Jawaban">
+    <br>
+    <button class="number-btn" onclick="appendNumber(1)">1</button>
+    <button class="number-btn" onclick="appendNumber(2)">2</button>
+    <button class="number-btn" onclick="appendNumber(3)">3</button>
+    <br>
+    <button class="number-btn" onclick="appendNumber(4)">4</button>
+    <button class="number-btn" onclick="appendNumber(5)">5</button>
+    <button class="number-btn" onclick="appendNumber(6)">6</button>
+    <br>
+    <button class="number-btn" onclick="appendNumber(7)">7</button>
+    <button class="number-btn" onclick="appendNumber(8)">8</button>
+    <button class="number-btn" onclick="appendNumber(9)">9</button>
+    <br>
+    <button class="number-btn" onclick="appendNumber(0)">0</button>
+    <br>
+    <button onclick="appendOperator('+')">+</button>
+    <button onclick="appendOperator('-')">-</button>
+    <button onclick="appendOperator('*')">*</button>
+    <button onclick="appendOperator('/')">/</button>
+    <br>
+    <button onclick="checkAnswer()">Cek Jawaban</button>
+    <div id="answer"></div>
+    <div id="top-score">Top Score: <span id="topScore">0</span></div>
 
-    <body>
-        <!-- blog posts will appear here -->
-        <div id="blog"></div>
+    <script>
+        let currentScore = 0;
+        let topScore = 0;
 
-        <!-- load jQuery and Pagedown -->
-        <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-        <script src="http://pagedown.googlecode.com/hg/Markdown.Converter.js"></script>
+        let currentExpression = '';
 
-        <!-- array with list of posts -->
-        <script src="./js/JblogSEntries.js"></script>
+        // Fungsi untuk menambahkan angka ke input jawaban
+        function appendNumber(number) {
+            const userAnswerElement = document.getElementById('userAnswer');
+            userAnswerElement.value += number;
+            currentExpression += number;
+        }
 
-        <!-- Settings -->
-        <script src="./js/JblogS_Settings.js"></script>
-        
-        <!-- JblogS -->
-        <script src="./js/JblogS.js"></script>
-    </body>
+        // Fungsi untuk menambahkan operator ke input jawaban
+        function appendOperator(operator) {
+            const userAnswerElement = document.getElementById('userAnswer');
+            userAnswerElement.value += operator;
+            currentExpression += operator;
+        }
+
+        // Fungsi untuk menghasilkan pertanyaan acak
+        function generateQuestion() {
+            const num1 = Math.floor(Math.random() * 10) + 1;
+            const num2 = Math.floor(Math.random() * 10) + 1;
+            const operators = ['+', '-', '*', '/'];
+            const randomOperator = operators[Math.floor(Math.random() * operators.length)];
+            return `${num1} ${randomOperator} ${num2}`;
+        }
+
+        let correctAnswer;
+
+        // Fungsi untuk memulai permainan
+        function startGame() {
+            const questionElement = document.getElementById('question');
+            const userAnswerElement = document.getElementById('userAnswer');
+            userAnswerElement.value = ''; // Reset input jawaban
+            currentExpression = '';
+            correctAnswer = generateQuestion();
+            questionElement.textContent = `Berapa hasil dari ${correctAnswer}?`;
+        }
+
+        // Fungsi untuk memeriksa jawaban
+        function checkAnswer() {
+            const userAnswer = document.getElementById('userAnswer').value;
+            const answerElement = document.getElementById('answer');
+            const topScoreElement = document.getElementById('topScore');
+
+            if (userAnswer === '') {
+                answerElement.textContent = 'Masukkan jawaban Anda.';
+            } else if (parseFloat(userAnswer) === eval(correctAnswer)) {
+                answerElement.textContent = 'Jawaban Anda benar!';
+                currentScore++;
+                if (currentScore > topScore) {
+                    topScore = currentScore;
+                    topScoreElement.textContent = topScore;
+                }
+                startGame(); // Mulai pertanyaan baru
+            } else {
+                answerElement.textContent = 'Jawaban Anda salah. Coba lagi.';
+                currentScore = 0; // Reset skor saat jawaban salah
+                startGame(); // Mulai pertanyaan baru
+            }
+        }
+
+        // Memulai permainan saat halaman dimuat
+        startGame();
+    </script>
+</body>
 </html>
